@@ -1,1 +1,1 @@
-module "github.com/r0am3r/ProcessBar"
+module "github.com/r0am3r/processBar"
