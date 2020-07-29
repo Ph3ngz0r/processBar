@@ -1,6 +1,9 @@
 package processBar
 
-import "fmt"
+import (
+    "fmt"
+    "strings"
+)
 
 type Bar struct {
     percent int  //百分比
@@ -51,10 +54,12 @@ func (b *Bar) getPercent() int {
 // 播放进度
 func (b *Bar) Play (cur int) {
     b.cur = cur
-    last := b.percent
+    lastPercent := b.percent
     b.percent = b.getPercent()
-    if last != b.percent && b.percent % b.accuracy == 0 {
-        b.rate += b.graph
+    last := (lastPercent + b.accuracy - 1) / b.accuracy
+    current := (b.percent + b.accuracy - 1) / b.accuracy
+    if current - last > 0 {
+        b.rate += strings.Repeat(b.graph, current -last)
         fmt.Printf("\r%4d/%d %3d%% [%-1s]", b.cur, b.total, b.percent, b.rate)
     }
 }
